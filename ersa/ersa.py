@@ -123,18 +123,20 @@ def main():
             db.insert(ests, seg_lists)
     else:
         output_file = open(args.ofile, "w") if args.ofile else stdout
-        print("{:<20}\t{:<20}\t{:<10}\t{:<10}\t{:>10}\t{:>10}\t{:>10}"
-              .format("Indv_1", "Indv_2", "Rel_est1", "Rel_est2", "d_est", "N_seg", "Tot_cM"),
+        print("{:<20}\t{:<20}\t{:<10}\t{:<10}\t{:>10}\t{:>10}\t{:>10}\t{:>10}\t{:>10}"
+              .format("Indv_1", "Indv_2", "Rel_est1", "Rel_est2", "d_est", "lower_d", "upped_d", "N_seg", "Tot_cM"),
               file=output_file)
         for est, seg_list in gen_estimates(args, h0, ha, pair_dict):
             d_est = est.d if est.reject else "NA"
+            lower_d = est.lower_d if est.reject and args.ci else "NA"
+            upper_d = est.upper_d if est.reject and args.ci else "NA"
             s = est.cm
             if est.rel_est is None:
                 rel_est = ("NA", "NA")
             else:
                 rel_est = est.rel_est
             print("{:<20}\t{:<20}\t{:10}\t{:10}\t{:>10}\t{:10}\t{:10,.2f}"
-                  .format(est.indv1, est.indv2, rel_est[0], rel_est[1], d_est, len(seg_list), s),
+                  .format(est.indv1, est.indv2, rel_est[0], rel_est[1], d_est, lower_d, upper_d, len(seg_list), s),
                   file=output_file)
 
     print("--- {} seconds ---".format(round(time() - start_time, 3)))
