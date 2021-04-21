@@ -135,7 +135,7 @@ def main():
                 rel_est = ("NA", "NA")
             else:
                 rel_est = est.rel_est
-            print("{:<20}\t{:<20}\t{:10}\t{:10}\t{:>10}\t{:10}\t{:10,.2f}"
+            print("{:<20}\t{:<20}\t{:10}\t{:10}\t{:>10}\t{:10}\t{:10}\t{:10}\t{:10,.2f}"
                   .format(est.indv1, est.indv2, rel_est[0], rel_est[1], d_est, lower_d, upper_d, len(seg_list), s),
                   file=output_file)
 
